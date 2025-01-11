@@ -1,10 +1,16 @@
+const status = require('dotenv').config()
+
+
 import * as Carousel from "./Carousel.js";
 import axios from "axios";
 
+const API_KEY = process.env.API_KEY
+const BASE_URL = process.env.BASE_URL
 // setting default baseURL and api key
-axios.defaults.baseURL = "https://api.thecatapi.com/v1";
-axios.defaults.headers.common["x-api-key"] =
-  "live_60fIwrvsfSd3CMqMLwStuWIS8ZuSbOG5TZk37un2sEFuwR7nKXMvQKXMC9kjzfLd";
+axios.defaults.baseURL = BASE_URL;
+axios.defaults.headers.common["x-api-key"] = API_KEY
+
+
 // The breed selection input element.
 const body = document.querySelector('body')
 const breedSelect = document.getElementById("breedSelect");
@@ -15,9 +21,10 @@ const progressBar = document.getElementById("progressBar");
 // The get favourites button element.
 const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 
+
+
 // Step 0: Store your API key here for reference and easy access.
-const API_KEY =
-  "live_60fIwrvsfSd3CMqMLwStuWIS8ZuSbOG5TZk37un2sEFuwR7nKXMvQKXMC9kjzfLd";
+
 
 /**
  * 1. Create an async function "initialLoad" that does the following:
@@ -182,6 +189,8 @@ export async function favourite(imgId) {
       const addedFav = await axios.post("/favourites", {
         image_id: imgId
       });
+
+
       console.log(addedFav.data, "this is added to favourites");
     }
   } catch (error) {
@@ -208,7 +217,7 @@ const url = image.image.url
      const element =  Carousel.createCarouselItem(url)
       Carousel.appendCarousel(element)
     })
-
+  Carousel.start()
 }
 
 getFavouritesBtn.addEventListener('click', favorites)
